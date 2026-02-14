@@ -19,41 +19,68 @@
           </div>
         </div>
       </div>
+
       <div class="col-md-8 mt-3">
         <div class="card">
           <div class="card-body">
+
             <div class="row">
               <div class="col"><h2>Player Name</h2></div>
               <div class="col"><h2 class="text-secondary float-end">{{player.name}}</h2></div>
             </div>
             <hr>
+
             <div class="row">
               <div class="col"><h2>Position</h2></div>
               <div class="col"><h2 class="text-secondary float-end">{{player.position}}</h2></div>
             </div>
             <hr>
+
             <div class="row">
               <div class="col"><h2>Nationality</h2></div>
               <div class="col"><h2 class="text-secondary float-end">{{player.nationality}}</h2></div>
             </div>
             <hr>
+
             <div class="row">
               <div class="col"><h2>Goals</h2></div>
               <div class="col"><h2 class="text-secondary float-end">{{player.goals}}</h2></div>
             </div>
             <hr>
+
+            {# Show Clean Sheets only for Goalkeeper #}
+            {% if player.position|lower in ['goalkeeper', 'gk'] %}
             <div class="row">
-              <div class="col"><h2>Squad Number</h2></div>
-              <div class="col"><h2 class="text-secondary float-end">{{player.squad_no}}</h2></div>
+              <div class="col"><h2>Clean Sheets</h2></div>
+              <div class="col">
+                <h2 class="text-secondary float-end">
+                  {% if player.clean_sheets is not none %}
+                    {{ player.clean_sheets }}
+                  {% else %}
+                    -
+                  {% endif %}
+                </h2>
+              </div>
             </div>
             <hr>
+            {% endif %}
+
+            <div class="row">
+              <div class="col"><h2>Squad Number</h2></div>
+              <div class="col">
+                <h2 class="text-secondary float-end">
+                  {{ player.squad_no if player.squad_no is not none else '-' }}
+                </h2>
+              </div>
+            </div>
+            <hr>
+
             <div class="row">
               <div class="col"><h2>Club</h2></div>
               <div class="col"><h2 class="text-secondary float-end">{{player.club.name}}</h2></div>
             </div>
             <hr>
 
-            
             <div class="row mt-5">
               <div class="col">
                 <a href="{{url_for('players.index')}}" class="btn btn-outline-success">
@@ -69,10 +96,10 @@
               </div>
             </div>
             <hr>
+
           </div>
         </div>
       </div>
     </div>
-    
   </div>
 {% endblock %}

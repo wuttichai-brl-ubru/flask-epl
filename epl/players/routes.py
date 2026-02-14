@@ -23,8 +23,11 @@ def new_player():
     img = request.form['img']
     club_id = int(request.form['club_id'])
 
+    clean_sheets_raw = request.form.get('clean_sheets', '').strip()
+    clean_sheets = int(clean_sheets_raw) if clean_sheets_raw else None
+
     player = Player(name=name, position=position, nationality=nationality,
-                    goals=goals, squad_no=squad_no, img=img, club_id=club_id)
+                    goals=goals, clean_sheets=clean_sheets, squad_no=squad_no, img=img, club_id=club_id)
     db.session.add(player)
     db.session.commit()
     flash('add new player successfully', 'success')
@@ -64,10 +67,14 @@ def update_player(id):
     img = request.form['img']
     club_id = int(request.form['club_id'])
 
+    clean_sheets_raw = request.form.get('clean_sheets', '').strip()
+    clean_sheets = int(clean_sheets_raw) if clean_sheets_raw else None
+
     player.name = name
     player.position = position
     player.nationality = nationality
     player.goals = goals
+    player.clean_sheets = clean_sheets
     player.squad_no = squad_no
     player.img = img
     player.club_id = club_id
